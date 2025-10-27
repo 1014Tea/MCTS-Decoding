@@ -1,4 +1,4 @@
-# Policy-Guided-MCTS-Decoding
+# MCTS-Decoding
 
 This repository contains the implementation for our paper submitted at ICC 2026.
 
