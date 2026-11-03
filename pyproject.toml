@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcts-decoding-framework"
+version = "0.1.0"
+description = "A minimal framework for policy-guided ordered-statistics decoding"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+dependencies = ["numpy>=1.24"]
+
+[project.scripts]
+policy-osd-demo = "policy_osd.demo:main"
+
+[tool.setuptools.packages.find]
+include = ["policy_osd*"]
