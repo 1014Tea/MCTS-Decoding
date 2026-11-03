@@ -109,6 +109,13 @@ and rebuilds the graph inputs after a selected exchange. The hook contains
 no learned MRB selector or MCTS implementation.
 
 See [the executable hook example](examples/hook_demo.py).
+It uses one offline-selected Hamming-code sample (seed 2331, noise standard
+deviation 0.8). Both runs use the same fixed branch scores; the refinement hook
+makes the first legal exchange and then stops, without access to the target.
+The target codeword is visited fifth with the conventional basis and first
+after the exchange. Both runs still check all 11 order-two TEPs. The printed
+target position is a one-based offline statistic, not an online stopping rule
+or evidence of average performance gains.
 
 ## Stopping, pruning, and counting
 
