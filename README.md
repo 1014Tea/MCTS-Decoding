@@ -4,9 +4,6 @@ This repository accompanies our work on policy-guided decoding of short linear
 block codes, including our ICC 2026 paper. This first release provides a small,
 runnable receiver framework and extension interfaces.
 
-**Further release:** Additional implementation code will be released upon
-acceptance of the journal paper.
-
 **Release scope:** the learned network implementations, pretrained weights,
 MCTS training/label-generation pipelines, training data, and paper-scale
 experiments are not included. This release demonstrates the software interfaces;
