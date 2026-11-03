@@ -50,6 +50,7 @@ order-limited TEP set unless a candidate-check budget is supplied:
 python -m policy_osd --trials 100 --order 2 --budget 5
 python -m unittest discover -s tests -v
 python examples/hook_demo.py
+python examples/visitation_demo.py
 ```
 
 ## Receiver flow
@@ -117,6 +118,36 @@ after the exchange. Both runs still check all 11 order-two TEPs. The printed
 target position is a one-based offline statistic, not an online stopping rule
 or evidence of average performance gains.
 
+### Policy and combined examples
+
+The [visitation example](examples/visitation_demo.py) adds two selected samples
+using a Reed-Muller RM(1,4) `(16,5,8)` code. Within each sample, all four runs
+share the received vector, order-two budget, and stopping/pruning settings.
+The baseline uses fixed extend-first DFS. The policy chooses the child TEP
+with the smaller sum of `abs(r_i)` over its flipped basis bits. This is an executable
+non-neural rule, not the trained GNN. Both refined runs use the same first-legal-
+exchange rule, followed by STOP, without access to the transmitted word.
+
+| Selected sample | Fixed DFS | Policy only | MRB exchange only | MRB + policy |
+| --- | ---: | ---: | ---: | ---: |
+| Policy illustration, seed 34 | 12 | 6 | 1 | 1 |
+| Combined illustration, seed 412 | 14 | 8 | 5 | 4 |
+
+Entries are the **first target-codeword positions, counted from one**. All
+runs check 16 TEPs and recover the target codeword. The target is used only
+after decoding to measure the position; it does not guide the rules or stop
+search. These samples illustrate how the interfaces change visitation, not
+average BLER or decoding-complexity gains.
+
+```bash
+python examples/visitation_demo.py
+python examples/visitation_demo.py --case combined --json
+```
+
+The JSON form includes the selected bases, exchanges, target-bit error
+positions in the basis, and the complete checked-candidate traces. Code-position
+indices in those fields are zero-based; target visit positions are one-based.
+
 ## Stopping, pruning, and counting
 
 - `stopping(progress)` runs after each evaluated candidate and returns a Boolean.
@@ -152,6 +183,7 @@ policy_osd/
   demo.py          standalone Hamming-code example
 examples/
   hook_demo.py     connect external policy and receiver hooks
+  visitation_demo.py  compare fixed DFS, policy, MRB, and their combination
 tests/
   test_framework.py
 ```
